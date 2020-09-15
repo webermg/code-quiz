@@ -11,3 +11,23 @@
     font-family: Arial, Helvetica, sans-serif;
     padding: 5px;
 }
+
+/* content */
+
+.content {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.start-button-area {
+    display: box;
+}
+
+.buttons-area {
+    margin: 0 auto;
+}
+
+ul {
+    text-align: center;
+    list-style: none;
+}
