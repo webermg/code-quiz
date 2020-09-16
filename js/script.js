@@ -8,11 +8,17 @@ const startButton = document.querySelector(".start-button");
 const buttonsArea = document.querySelector(".buttons");
 const buttons = buttonsArea.children;
 const scoreForm = document.querySelector(".score-entry");
+const scoreList = document.querySelector(".high-scores");
+const scoreListButtons = document.querySelector(".score-buttons");
 const status = document.getElementById("status");
 let index = 0;
 
 const init = () => {
     timeSection.textContent = "0";
+    hideButtons();
+}
+
+const hideButtons = () => {
     for (const item of buttons) {
         item.style.display = "none";
     }
@@ -48,14 +54,35 @@ buttonsArea.addEventListener("click", (e) => {
     else renderScoreSubmission();
 });
 
+scoreForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    //add score to storage
+    let initials = document.getElementById("entry").value;
+    console.log(initials);
+
+    //render page
+    renderHighScores();
+});
+
 const renderScoreSubmission = () => {
     heading.textContent = "All Done";
     heading.style.display = "block";
 
     textArea.textContent = `Your final score was ${timeSection.textContent}`;
-    init();
+    hideButtons();
 
     scoreForm.style.display = "block";
+}
+
+const renderHighScores = () => {
+    heading.textContent = "High Scores";
+    textArea.style.display = "none";
+    scoreForm.style.display = "none";
+    hideButtons();
+    scoreList.style.display = "block";
+    scoreListButtons.style.display = "block";
+
 }
 
 init();
