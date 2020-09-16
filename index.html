@@ -11,24 +11,33 @@
 <body>
     <div class="header">
         <div class="highscore-section">
-            <a href="#">View Highscores</a>
+            <button id="highscore-link">View Highscores</button>
         </div>
         <div class="time-section">
             <p>Time: <span class="time"></span></p>
         </div>
     </div>
     <main>
+        <!-- heading -->
         <div class="heading">
             <h1 id="heading">Coding Quiz Challenge</h1>
         </div>
         <div class="content">
+            <!-- text element -->
             <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti saepe aliquam et! Fuga
                 dignissimos pariatur distinctio repudiandae corporis, repellendus ex amet molestiae quibusdam ad tempore
                 consectetur asperiores. Alias, officiis repudiandae.</p>
-            <div class="start-button-area">
+            
+                <div class="start-button-area">
                 <button class="start-button">Start</button>
             </div>
-            <form action="" class="score-entry"></form>
+            <!-- highscore submit form -->
+            <form action="" class="score-entry">
+                <label for="entry">Enter initials</label>
+                <input type="text" id="entry">
+                <button id="submit">Submit</button>
+            </form>
+            <!-- buttons for question answers -->
             <div class="buttons-area">
                 <div class="buttons">
                     <button>button 1</button>
@@ -38,6 +47,14 @@
                     <button>button 5</button>
                 </div>
             </div>
+            <!-- high score list -->
+            <ol class="high-scores"></ol>
+            <!-- high score option buttons -->
+            <div class="score-buttons">
+                <button class="go-back">Go Back</button>
+                <button class="clear">Clear Highscores</button>
+            </div>
+            <!-- question status area -->
             <div class="status-area">
                 <p id="status"></p>
             </div>
