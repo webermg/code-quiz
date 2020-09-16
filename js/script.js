@@ -6,6 +6,7 @@ const textArea = document.querySelector(".text");
 const startButton = document.querySelector(".start-button");
 const buttonsArea = document.querySelector(".buttons");
 const buttons = buttonsArea.children;
+const status = document.getElementById("status");
 let index = 0;
 
 const init = () => {
@@ -15,19 +16,33 @@ const init = () => {
     }
 }
 
-startButton.addEventListener("click", () => {
-    document.getElementById("heading").style.display = "none";
-    startButton.style.display = "none";
-    
-    textArea.textContent = questions[index][0];
+//sets display to question indicated by index
+const renderQuestion = qNum => {
+    textArea.textContent = questions[qNum][0];
     for(let j = 0; j < buttons.length; j++) {
-        if(questions[index][1][j]) {
-            buttons[j].innerHTML = questions[index][1][j];
+        if(questions[qNum][1][j]) {
+            buttons[j].textContent = questions[qNum][1][j];
             buttons[j].style.display = "block";
         }
         else buttons[j].style.display = "none";
     }
+}
+
+startButton.addEventListener("click", () => {
+    document.getElementById("heading").style.display = "none";
+    startButton.style.display = "none";
     
+    renderQuestion(index);
+    
+});
+
+buttonsArea.addEventListener("click", (e) => {
+    if(!e.target.matches("button") || index >= questions.length) return;
+    const answer = e.target.textContent;
+    if(answer === questions[index][2]) status.textContent = "right";
+    else status.textContent = "wrong";
+    index++;
+    if(index < questions.length) renderQuestion(index);
 });
 
 init();
