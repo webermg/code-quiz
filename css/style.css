@@ -14,20 +14,32 @@
 
 /* content */
 
-.content {
+main {
     width: 40%;
     margin: 0 auto;
 }
 
+.content {
+    
+}
+
+.heading {
+    text-align: center;
+}
+
 .start-button-area {
-    display: box;
+    display: flex;
+    justify-content: center;
+}
+
+.score-entry {
+    display: none;
 }
 
 .buttons-area {
-    margin: 0 auto;
+
 }
 
 ul {
-    text-align: center;
     list-style: none;
 }
