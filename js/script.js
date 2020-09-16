@@ -1,3 +1,4 @@
+//contains questions and answers
 import { questions } from "./questions.js";
 
 //variables
@@ -5,10 +6,10 @@ const timeSection = document.querySelector(".time");
 const heading = document.getElementById("heading");
 const textArea = document.querySelector(".text");
 const startButton = document.querySelector(".start-button");
-const buttonsArea = document.querySelector(".buttons");
+const buttonsArea = document.querySelector(".buttons-area");
 const buttons = buttonsArea.children;
 const scoreForm = document.querySelector(".score-entry");
-const scoreList = document.querySelector(".high-scores");
+const scoreTable = document.querySelector(".high-scores");
 const scoreListButtons = document.querySelector(".score-buttons");
 const status = document.getElementById("status");
 let highscores;
@@ -16,22 +17,26 @@ let time;
 let index;
 
 const introText = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+const tableHeaderText = "<tr class=\"header-row\"><th>Initials</th><th>Score</th></tr>"
 const startTime = 75;
 
+//sets the initial view of the page.
 const init = () => {
-    document.getElementById("highscore-link").textContent = "View Highscores";
+    document.getElementById("highscore-link").style.display = "inline-block";
     timeSection.textContent = "0";
     heading.textContent = "Coding Quiz Challenge";
     heading.style.display = "block";
     textArea.textContent = introText;
     textArea.style.display = "block";
     startButton.style.display = "block";
-    hideButtons();
+    buttonsArea.style.display = "none";
+    //hideButtons();
     document.querySelector(".high-score-area").style.display = "none";
     index = 0;
     time = startTime;
 }
 
+//hides the quiz buttons
 const hideButtons = () => {
     for (const item of buttons) {
         item.style.display = "none";
@@ -41,7 +46,13 @@ const hideButtons = () => {
 //sets display to question indicated by index
 const renderQuestion = qNum => {
     textArea.textContent = questions[qNum][0];
-    for (let j = 0; j < buttons.length; j++) {
+    buttonsArea.innerHTML = "";
+    for (let j = 0; j < questions[qNum][1].length; j++) {
+        let button = document.createElement("button");
+        button.textContent = questions[qNum][1][j];
+        buttonsArea.append(button);
+
+
         if (questions[qNum][1][j]) {
             buttons[j].textContent = questions[qNum][1][j];
             buttons[j].style.display = "block";
@@ -50,28 +61,42 @@ const renderQuestion = qNum => {
     }
 }
 
+//runs the timer and displays first question
 startButton.addEventListener("click", () => {
     document.getElementById("heading").style.display = "none";
     startButton.style.display = "none";
     timeSection.textContent = time;
     setTime();
     shuffle(questions);
+    buttonsArea.style.display = "block";
     renderQuestion(index);
 
 });
 
+//
 buttonsArea.addEventListener("click", (e) => {
     if (!e.target.matches("button") || index >= questions.length) return;
     const answer = e.target.textContent;
-    if (answer === questions[index][2]) status.textContent = "right";
+    if (answer === questions[index][2]) {
+        status.textContent = "Correct";
+        status.style.color = "green";
+    }
     else {
-        time -= 5;
+        time -= 10;
+        if(time <= 0) {
+            renderScoreSubmission();
+            time = 0;
+            index = 10;
+        }
         timeSection.textContent = time;
         status.textContent = "wrong";
+        status.style.color = "red";
     }
+    document.querySelector(".status-area").style.borderTop = "1px solid grey";
     setTimeout(() => {
         status.textContent = "";
-    }, 1000);
+        document.querySelector(".status-area").style.borderTop = "";
+    }, 500);
     index++;
     if (index < questions.length) renderQuestion(index);
     else renderScoreSubmission();
@@ -82,11 +107,13 @@ scoreForm.addEventListener("submit", (e) => {
 
     //add score to storage
     let initials = document.getElementById("entry").value;
-    document.getElementById("entry").value = "";
-    let scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
-    scores.push(`${initials}: ${time}`);
-    localStorage.setItem("scores",JSON.stringify(scores));
-
+    console.log(initials);
+    if(initials.trim() != "") {
+        document.getElementById("entry").value = "";
+        let scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
+        scores.push(`${initials}:${time}`);
+        localStorage.setItem("scores",JSON.stringify(scores));
+    }
     //render page
     renderHighScores();
 });
@@ -96,29 +123,35 @@ const renderScoreSubmission = () => {
     heading.style.display = "block";
 
     textArea.textContent = `Your final score was ${timeSection.textContent}`;
-    hideButtons();
+    buttonsArea.style.display = "none";
+    // hideButtons();
 
     scoreForm.style.display = "block";
 }
 
 const renderHighScores = () => {
-    document.getElementById("highscore-link").textContent = "";
+    document.getElementById("highscore-link").style.display = "none";
     heading.textContent = "High Scores";
     heading.style.display = "block"
     textArea.style.display = "none";
     startButton.style.display = "none";
     scoreForm.style.display = "none";
-    hideButtons();
+    buttonsArea.style.display = "none";
+    // hideButtons();
     
     //load scores
-    scoreList.innerHTML = "";
+    scoreTable.innerHTML = tableHeaderText;
     let scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
-    console.log(scores[0]);
     for (let i = 0; i < scores.length; i++) {
-        console.log(scores[i]);
-        let scoreEl = document.createElement("li");
-        scoreEl.textContent = scores[i];//`${prop}: ${scores[prop]}`;
-        scoreList.append(scoreEl);
+        let score = scores[i].split(":");
+        let nameEl = document.createElement("td");
+        let scoreEl = document.createElement("td");
+        nameEl.textContent = score[0];
+        scoreEl.textContent = score[1];
+        let newRow = document.createElement("tr");
+        newRow.append(nameEl);
+        newRow.append(scoreEl);
+        scoreTable.append(newRow);
     }
 
     document.querySelector(".high-score-area").style.display = "block";
@@ -126,23 +159,26 @@ const renderHighScores = () => {
 
 document.getElementById("highscore-link").addEventListener("click", () => {
     time = 0;
+    index = questions.length;
     timeSection.textContent = time;
-    //clearInterval(timer);
     renderHighScores();
 });
 
+//resets the page
 document.querySelector(".go-back").addEventListener("click", init);
 
+//clears the table display and removes the scores from storage
 document.querySelector(".clear").addEventListener("click", () => {
-    scoreList.innerHTML = "";
+    scoreTable.innerHTML = tableHeaderText;
     localStorage.removeItem("scores");
 });
 
 //timer function
 const setTime = () => {
     let timer = setInterval(function () {
-        if (time === 0 || index >= questions.length) {
+        if (time <= 0 || index >= questions.length) {
             clearInterval(timer);
+            if(index < questions.length) renderScoreSubmission();
             return;
         }
         time--;

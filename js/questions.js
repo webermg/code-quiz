@@ -84,14 +84,5 @@ export let questions = [
             "Array"
         ],
         "Math"
-    ],
-    [
-        "Compared to Java, Javascript is: ",
-        [
-            "faster",
-            "slower",
-            "about the same"
-        ],
-        "slower"
     ]
 ]

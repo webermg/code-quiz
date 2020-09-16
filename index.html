@@ -9,48 +9,47 @@
 </head>
 
 <body>
-    <div class="header">
+    <header class="header">
         <div class="highscore-section">
             <button id="highscore-link">View Highscores</button>
         </div>
         <div class="time-section">
             <p>Time: <span class="time"></span></p>
         </div>
-    </div>
+    </header>
     <main>
-        <!-- heading -->
-        <div class="heading">
-            <h1 id="heading">Coding Quiz Challenge</h1>
-        </div>
-        <div class="content">
+        <article class="content">
+            <!-- heading -->
+            <div class="heading">
+                <h1 id="heading">Coding Quiz Challenge</h1>
+            </div>
             <!-- text element -->
-            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti saepe aliquam et! Fuga
-                dignissimos pariatur distinctio repudiandae corporis, repellendus ex amet molestiae quibusdam ad tempore
-                consectetur asperiores. Alias, officiis repudiandae.</p>
+            <p class="text content">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
 
-            <div class="start-button-area">
+            <div class="start-button-area content">
                 <button class="start-button">Start</button>
             </div>
             <!-- highscore submit form -->
-            <form action="" class="score-entry">
+            <form action="submit" class="score-entry content">
                 <label for="entry">Enter initials</label>
                 <input type="text" id="entry">
                 <button id="submit">Submit</button>
             </form>
             <!-- buttons for question answers -->
-            <div class="buttons-area">
-                <div class="buttons">
-                    <button>button 1</button>
-                    <button>button 2</button>
-                    <button>button 3</button>
-                    <button>button 4</button>
-                    <button>button 5</button>
-                </div>
+            <div class="buttons-area content">
+                
+                    
+                
             </div>
             <!-- high score area -->
-            <div class="high-score-area">
+            <div class="high-score-area content">
                 <!-- high score list -->
-                <ol class="high-scores"></ol>
+                <table class="high-scores">
+                    <tr class="header-row">
+                        <th>Initials</th>
+                        <th>Score</th>
+                    </tr>
+                </table>
                 <!-- high score option buttons -->
                 <div class="score-buttons">
                     <button class="go-back">Go Back</button>
@@ -59,10 +58,10 @@
             </div>
             
             <!-- question status area -->
-            <div class="status-area">
+            <div class="status-area content">
                 <p id="status"></p>
             </div>
-        </div>
+        </article>
     </main>
     <script src="js/script.js" type="module"></script>
 </body>

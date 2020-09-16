@@ -1,6 +1,15 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    padding: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: yellow;
+    border-radius: 5px;
 }
 
 /* header */
@@ -12,19 +21,35 @@
     padding: 5px;
 }
 
+.time-section {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 /* content */
 
 main {
     width: 40%;
     margin: 0 auto;
+    
+}
+
+.time {
+    color: red;
 }
 
 .content {
-    
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.text {
+    font-size: 18px;
 }
 
 .heading {
     text-align: center;
+    font-size: larger;
 }
 
 .start-button-area {
@@ -32,14 +57,47 @@ main {
     justify-content: center;
 }
 
+.buttons-area {
+    display: none;
+}
+
 .score-entry {
     display: none;
 }
 
-.buttons-area {
+.status-area {
+    margin-top: 10px;
+}
 
+#status {
+    color: lightgrey;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: bold;
 }
 
 ul {
     list-style: none;
+}
+
+th {
+    width: 20%;
+}
+
+.header-row {
+    font-size: 20px;
+    background-color: lightgrey;
+}
+
+.high-score-area {
+    display: none;
+}
+
+.high-scores {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.score-buttons {
+    padding-top: 10px;
 }
