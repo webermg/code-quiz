@@ -11,11 +11,15 @@ const scoreForm = document.querySelector(".score-entry");
 const scoreList = document.querySelector(".high-scores");
 const scoreListButtons = document.querySelector(".score-buttons");
 const status = document.getElementById("status");
+let time = 60;
 let index = 0;
 
 const init = () => {
+    document.getElementById("highscore-link").textContent = "View Highscores";
     timeSection.textContent = "0";
     hideButtons();
+    scoreListButtons.style.display = "none";
+    scoreList.style.display = "none";
 }
 
 const hideButtons = () => {
@@ -39,7 +43,8 @@ const renderQuestion = qNum => {
 startButton.addEventListener("click", () => {
     document.getElementById("heading").style.display = "none";
     startButton.style.display = "none";
-    
+    timeSection.textContent = time;
+    setTime();
     renderQuestion(index);
     
 });
@@ -48,7 +53,14 @@ buttonsArea.addEventListener("click", (e) => {
     if(!e.target.matches("button") || index >= questions.length) return;
     const answer = e.target.textContent;
     if(answer === questions[index][2]) status.textContent = "right";
-    else status.textContent = "wrong";
+    else {
+        time -= 5;
+        timeSection.textContent = time;
+        status.textContent = "wrong";
+    }
+    setTimeout(() => {
+        status.textContent = "";
+    }, 1000);
     index++;
     if(index < questions.length) renderQuestion(index);
     else renderScoreSubmission();
@@ -76,6 +88,7 @@ const renderScoreSubmission = () => {
 }
 
 const renderHighScores = () => {
+    document.getElementById("highscore-link").textContent = "";
     heading.textContent = "High Scores";
     textArea.style.display = "none";
     scoreForm.style.display = "none";
@@ -84,5 +97,20 @@ const renderHighScores = () => {
     scoreListButtons.style.display = "block";
 
 }
+
+const setTime = () => {
+    let timerInterval = setInterval(function() {
+        if(time === 0 || index >= questions.length) {
+            clearInterval(timerInterval);
+            return;
+        }
+        time--;
+        timeSection.textContent = time;
+      
+      
+  
+    }, 1000);
+}
+  
 
 init();
