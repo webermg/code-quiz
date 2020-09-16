@@ -12,7 +12,6 @@ const scoreForm = document.querySelector(".score-entry");
 const scoreTable = document.querySelector(".high-scores");
 const scoreListButtons = document.querySelector(".score-buttons");
 const status = document.getElementById("status");
-let highscores;
 let time;
 let index;
 
@@ -30,7 +29,6 @@ const init = () => {
     textArea.style.display = "block";
     startButton.style.display = "block";
     buttonsArea.style.display = "none";
-    //hideButtons();
     document.querySelector(".high-score-area").style.display = "none";
     index = 0;
     time = startTime;
@@ -73,7 +71,8 @@ startButton.addEventListener("click", () => {
 
 });
 
-//
+//tests answer for correctness and loads next question or score submission
+//page if no more questions
 buttonsArea.addEventListener("click", (e) => {
     if (!e.target.matches("button") || index >= questions.length) return;
     const answer = e.target.textContent;
@@ -102,12 +101,12 @@ buttonsArea.addEventListener("click", (e) => {
     else renderScoreSubmission();
 });
 
+//tests for input and if so adds high scores and displays score page
 scoreForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     //add score to storage
     let initials = document.getElementById("entry").value;
-    console.log(initials);
     if(initials.trim() != "") {
         document.getElementById("entry").value = "";
         let scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
@@ -118,17 +117,18 @@ scoreForm.addEventListener("submit", (e) => {
     renderHighScores();
 });
 
+//shows the score submission page
 const renderScoreSubmission = () => {
     heading.textContent = "All Done";
     heading.style.display = "block";
 
     textArea.textContent = `Your final score was ${timeSection.textContent}`;
     buttonsArea.style.display = "none";
-    // hideButtons();
 
     scoreForm.style.display = "block";
 }
 
+//shows the high scores page
 const renderHighScores = () => {
     document.getElementById("highscore-link").style.display = "none";
     heading.textContent = "High Scores";
@@ -137,7 +137,6 @@ const renderHighScores = () => {
     startButton.style.display = "none";
     scoreForm.style.display = "none";
     buttonsArea.style.display = "none";
-    // hideButtons();
     
     //load scores
     scoreTable.innerHTML = tableHeaderText;
@@ -157,6 +156,7 @@ const renderHighScores = () => {
     document.querySelector(".high-score-area").style.display = "block";
 }
 
+//cancels a quiz in session and jumps to high scores page
 document.getElementById("highscore-link").addEventListener("click", () => {
     time = 0;
     index = questions.length;
