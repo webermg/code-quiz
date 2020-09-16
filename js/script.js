@@ -16,6 +16,7 @@ let time;
 let index;
 
 const introText = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+const startTime = 75;
 
 const init = () => {
     document.getElementById("highscore-link").textContent = "View Highscores";
@@ -28,7 +29,7 @@ const init = () => {
     hideButtons();
     document.querySelector(".high-score-area").style.display = "none";
     index = 0;
-    time = 60;
+    time = startTime;
 }
 
 const hideButtons = () => {
@@ -81,7 +82,10 @@ scoreForm.addEventListener("submit", (e) => {
 
     //add score to storage
     let initials = document.getElementById("entry").value;
-    console.log(initials);
+    document.getElementById("entry").value = "";
+    let scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
+    scores.push(`${initials}: ${time}`);
+    localStorage.setItem("scores",JSON.stringify(scores));
 
     //render page
     renderHighScores();
@@ -105,10 +109,19 @@ const renderHighScores = () => {
     startButton.style.display = "none";
     scoreForm.style.display = "none";
     hideButtons();
-    document.querySelector(".high-score-area").style.display = "block";
-    // scoreList.style.display = "block";
-    // scoreListButtons.style.display = "block";
+    
+    //load scores
+    scoreList.innerHTML = "";
+    let scores = localStorage.getItem("scores") ? JSON.parse(localStorage.getItem("scores")) : [];
+    console.log(scores[0]);
+    for (let i = 0; i < scores.length; i++) {
+        console.log(scores[i]);
+        let scoreEl = document.createElement("li");
+        scoreEl.textContent = scores[i];//`${prop}: ${scores[prop]}`;
+        scoreList.append(scoreEl);
+    }
 
+    document.querySelector(".high-score-area").style.display = "block";
 }
 
 document.getElementById("highscore-link").addEventListener("click", () => {
@@ -117,8 +130,15 @@ document.getElementById("highscore-link").addEventListener("click", () => {
     //clearInterval(timer);
     renderHighScores();
 });
+
 document.querySelector(".go-back").addEventListener("click", init);
 
+document.querySelector(".clear").addEventListener("click", () => {
+    scoreList.innerHTML = "";
+    localStorage.removeItem("scores");
+});
+
+//timer function
 const setTime = () => {
     let timer = setInterval(function () {
         if (time === 0 || index >= questions.length) {
@@ -127,9 +147,6 @@ const setTime = () => {
         }
         time--;
         timeSection.textContent = time;
-
-
-
     }, 1000);
 }
 
