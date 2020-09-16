@@ -2,10 +2,12 @@ import {questions} from "./questions.js";
 
 //variables
 const timeSection = document.querySelector(".time");
+const heading = document.getElementById("heading");
 const textArea = document.querySelector(".text");
 const startButton = document.querySelector(".start-button");
 const buttonsArea = document.querySelector(".buttons");
 const buttons = buttonsArea.children;
+const scoreForm = document.querySelector(".score-entry");
 const status = document.getElementById("status");
 let index = 0;
 
@@ -43,6 +45,17 @@ buttonsArea.addEventListener("click", (e) => {
     else status.textContent = "wrong";
     index++;
     if(index < questions.length) renderQuestion(index);
+    else renderScoreSubmission();
 });
+
+const renderScoreSubmission = () => {
+    heading.textContent = "All Done";
+    heading.style.display = "block";
+
+    textArea.textContent = `Your final score was ${timeSection.textContent}`;
+    init();
+
+    scoreForm.style.display = "block";
+}
 
 init();
