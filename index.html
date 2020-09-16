@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="header">
         <div class="highscore-section">
@@ -15,25 +17,33 @@
             <p>Time: <span class="time"></span></p>
         </div>
     </div>
-    
-    <div class="heading"></div>
-    <div class="content">
-        <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti saepe aliquam et! Fuga dignissimos pariatur distinctio repudiandae corporis, repellendus ex amet molestiae quibusdam ad tempore consectetur asperiores. Alias, officiis repudiandae.</p>
-        <div class="start-button-area">
-            <button>Start</button>
+    <main>
+        <div class="heading">
+            <h1 id="heading">Coding Quiz Challenge</h1>
         </div>
-        <form action="" class="score-entry"></form>
-        <div class="buttons-area">
-            <ul class="buttons">
-                <li><button>button 1</button></li>
-                <li><button>button 2</button></li>
-                <li><button>button 3</button></li>
-                <li><button>button 4</button></li>
-            </ul>
+        <div class="content">
+            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti saepe aliquam et! Fuga
+                dignissimos pariatur distinctio repudiandae corporis, repellendus ex amet molestiae quibusdam ad tempore
+                consectetur asperiores. Alias, officiis repudiandae.</p>
+            <div class="start-button-area">
+                <button class="start-button">Start</button>
+            </div>
+            <form action="" class="score-entry"></form>
+            <div class="buttons-area">
+                <div class="buttons">
+                    <button>button 1</button>
+                    <button>button 2</button>
+                    <button>button 3</button>
+                    <button>button 4</button>
+                    <button>button 5</button>
+                </div>
+            </div>
+            <div class="status-area">
+                <p id="status"></p>
+            </div>
         </div>
-        <div class="status"></div>
-    </div>
-    
-    <script src="script.js" type="module"></script>
+    </main>
+    <script src="js/script.js" type="module"></script>
 </body>
+
 </html>
